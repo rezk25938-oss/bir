@@ -1,0 +1,54 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>كويز عيد ميلادك 🎉</title>
+<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Cairo:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#ffe8d6;--ink:#2b1b17;--a:#ff5a4d;--b:#0fa3a3;--y:#ffd23f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#ffe8d6}}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%}
+body{background:var(--bg);color:var(--ink);font-family:Cairo,system-ui,sans-serif;padding:24px 18px 60px;display:flex;justify-content:center}
+main{width:100%;max-width:520px;text-align:center}
+h1{font-family:Lalezar,sans-serif;font-size:clamp(2.2rem,10vw,3.6rem);color:var(--a);margin:.2em 0;line-height:1.2;transform:rotate(-2deg)}
+.q{background:#fff;border:3px solid var(--ink);border-radius:20px;padding:20px;box-shadow:6px 6px 0 var(--ink);margin:18px 0}
+.q h2{font-size:1.25rem;margin:0 0 14px}
+button{font:inherit;font-weight:700;width:100%;padding:12px;margin:6px 0;border:3px solid var(--ink);border-radius:14px;background:var(--y);cursor:pointer}
+button:active{transform:translate(2px,2px)}
+.go{background:var(--b);color:#fff;font-size:1.2rem}
+.fb{min-height:1.6em;margin-top:8px;font-weight:700;color:var(--a)}
+#end{display:none}
+.gift{font-size:1.15rem;line-height:1.9}
+#gate{position:fixed;inset:0;z-index:20;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:20px;text-align:center}
+#gate input{font:inherit;font-size:1.2rem;padding:12px 16px;border-radius:14px;border:3px solid var(--ink);text-align:center;width:min(260px,80%);background:#fff;color:#222}
+#gate button{font:inherit;font-weight:700;padding:12px 28px;border-radius:14px;border:3px solid var(--ink);background:var(--y);color:var(var(--ink));cursor:pointer;width:auto}
+#gerr{min-height:1.4em;color:var(var(--a))}
+.tm{font-weight:700;margin:10px 0;line-height:1.7}
+.tm small{display:block;font-weight:400;opacity:.85}
+#ph{display:flex;gap:10px;overflow-x:auto;padding:10px 2px;margin:16px 0}
+#ph img{height:220px;border-radius:14px;flex:none;border:3px solid var(--ink)}
+</style></head><body><div id="gate"><div style="font-size:64px">🔒</div><p id="gmsg">اكتبي كلمة السر عشان تفتحي المفاجأة</p><input id="gp" type="password" placeholder="كلمة السر" autocomplete="off"><button id="gb">افتحي</button><div id="gerr"></div></div><main>
+<h1 id="t">كويز: تعرفيني قد إيه؟</h1>
+<div class="tm"></div><div id="app"><p>5 أسئلة، ومفيش إجابة غلط... بس كل إجابة ليها تعليق 😏</p><button class="go" id="s">يلا نبدأ</button></div>
+<script>
+var n=new URLSearchParams(location.search).get('n')||'';
+var Q=[["مين فينا بيتأخر أكتر؟",["إنتِ","أنا","إحنا الاتنين"],["مش هرد، كله متسجل.","اعتراف شجاع، بس مش مصدق.","الإجابة الدبلوماسية، ذكية!"]],
+["مين أكتر واحد بياكل من أكل التاني؟",["إنتِ","أنا","الأخت التانية"],["عارفك 😂","ده ظلم!","طبعًا، حد يقدر يقول لأ؟"]],
+["مين اللي بيفتكر المواعيد؟",["إنتِ","أنا","محدش"],["فعلًا، أنا اتعلمت منك.","أحاول...","صح، كل سنة بنتفاجئ."]],
+["لو سافرنا رحلة مفاجأة، هنروح فين؟",["البحر","الجبل","أي مكان فيه أكل"],["هنحجز فعلًا.","هاخد شنطتي.","دي أصدق إجابة."]],
+["أحلى حاجة في السنة الجديدة؟",["رحلة","نجاح","فلوس كتير"],["مكتوب في النوتة.","إن شاء الله.","آمين، وأنا معاكِ!"]]];
+var M="كل سنة وإنتِ طيبة"+(n?" يا "+n:"")+"! ربنا يفرحك ويحقق أحلامك السنة دي، وتفضلي أحلى حاجة في حياتي. وعندي ليكِ مفاجأة هتوصلك قريب... 🎁";
+var i=0,app=document.getElementById('app');
+document.getElementById('s').onclick=show;
+function show(){if(i>=Q.length)return done();var q=Q[i];app.innerHTML='<div class="q"><h2>'+(i+1)+'/'+Q.length+' · '+q[0]+'</h2></div>';var box=app.firstChild;
+q[1].forEach(function(o,k){var b=document.createElement('button');b.textContent=o;b.onclick=function(){box.querySelectorAll('button').forEach(function(x){x.disabled=true});box.insertAdjacentHTML('beforeend','<div class="fb">'+q[2][k]+'</div>');i++;var nb=document.createElement('button');nb.className='go';nb.textContent=i<Q.length?'اللي بعده':'شوفي النتيجة';nb.onclick=show;box.appendChild(nb)};box.appendChild(b)})}
+function done(){app.innerHTML='<div class="q gift"><h2>النتيجة: 100%</h2><p>عارفاني كويس جدًا... أو على الأقل بتجاوبي بثقة 😄</p><hr><p>'+M+'</p></div>';addPh(app)}
+
+var PH=['a (1).jpg','a (2).jpg','a (3).jpg','a (4).jpg','a (1).webp']; // حط هنا الصور (روابط أو data URI)
+var START=new Date(new URLSearchParams(location.search).get('d')||'2012-02-06T00:00:00');
+function tick(){var n=new Date(),y=n.getFullYear()-START.getFullYear(),a=new Date(START);a.setFullYear(START.getFullYear()+y);if(a>n){y--;a=new Date(START);a.setFullYear(START.getFullYear()+y)}
+var r=Math.floor((n-a)/1000),d=Math.floor(r/86400),h=Math.floor(r%86400/3600),m=Math.floor(r%3600/60),s=r%60;
+document.querySelectorAll('.tm').forEach(function(e){e.innerHTML='<small>بقالنا مع بعض</small>'+y+' سنة و '+d+' يوم و '+h+' ساعة و '+m+' دقيقة و '+s+' ثانية'})}
+tick();setInterval(tick,1000);
+function addPh(el){if(!PH.length)return;var w=document.createElement('div');w.id='ph';PH.forEach(function(u){var i=document.createElement('img');i.src=u;i.alt='';w.appendChild(i)});el.appendChild(w)}
+function unlock(){if(document.getElementById('gp').value.trim().toLowerCase()==='love'){document.getElementById('gate').style.display='none'}else{document.getElementById('gerr').textContent='كلمة السر غلط، جرّبي تاني 😉'}}
+document.getElementById('gb').onclick=unlock;document.getElementById('gp').onkeydown=function(e){if(e.key==='Enter')unlock()};
+</script></main></body></html>
